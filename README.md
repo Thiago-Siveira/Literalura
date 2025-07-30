@@ -64,7 +64,7 @@ Para dudas, sugerencias o reportes de errores, podés:
 
 ## 👥 Autores y colaboradores
 
-- 👨‍💻 **Cristian (@CristianEstMaida)** – Desarrollo completo, lógica de negocio y estructura del proyecto
+- 👨‍💻 **Thiago (@Thiago-Silveira)** – Desarrollo completo, lógica de negocio y estructura del proyecto
 - 🙌 Agradecimientos a [Alura LATAM](https://www.aluracursos.com/) por el material y los desafíos educativos
 
 ---
