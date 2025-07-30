@@ -1,0 +1,93 @@
+package com.alura.literalura.model;
+
+import com.alura.literalura.DTO.DatosAutor;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Entity
+@Table(
+    name = "autores"
+)
+public class Autor {
+    @Id
+    @GeneratedValue(
+        strategy = GenerationType.IDENTITY
+    )
+    private Long id;
+    private String nombre;
+    private Integer fechaDeNacimiento;
+    private Integer fechaDeFallecimiento;
+    @OneToMany(
+        mappedBy = "autor",
+        cascade = {CascadeType.ALL},
+        fetch = FetchType.EAGER
+    )
+    private List<Libro> libros = new ArrayList();
+
+    public Autor() {
+    }
+
+    public Autor(DatosAutor datosAutor) {
+        this.nombre = String.valueOf(datosAutor.nombre());
+
+        try {
+            this.fechaDeNacimiento = Integer.valueOf(datosAutor.fechaDeNacimiento());
+        } catch (NumberFormatException var4) {
+            this.fechaDeNacimiento = 0;
+        }
+
+        try {
+            this.fechaDeFallecimiento = Integer.valueOf(datosAutor.fechaDeFallecimiento());
+        } catch (NumberFormatException var3) {
+            this.fechaDeFallecimiento = 0;
+        }
+
+    }
+
+    public String toString() {
+        String var10000 = this.nombre;
+        return "Autor: " + var10000 + "\nFecha de nacimiento: " + this.fechaDeNacimiento + "\nFecha de fallecimiento: " + this.fechaDeFallecimiento + "\nLibros: " + String.valueOf(this.libros.stream().map(Libro::getTitulo).collect(Collectors.toList())) + "\n\n";
+    }
+
+    public String getNombre() {
+        return this.nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public Integer getFechaDeNacimiento() {
+        return this.fechaDeNacimiento;
+    }
+
+    public void setFechaDeNacimiento(Integer fechaDeNacimiento) {
+        this.fechaDeNacimiento = fechaDeNacimiento;
+    }
+
+    public Integer getFechaDeFallecimiento() {
+        return this.fechaDeFallecimiento;
+    }
+
+    public void setFechaDeFallecimiento(Integer fechaDeFallecimiento) {
+        this.fechaDeFallecimiento = fechaDeFallecimiento;
+    }
+
+    public List<Libro> getLibros() {
+        return this.libros;
+    }
+
+    public void setLibros(List<Libro> libros) {
+        libros.forEach((l) -> l.setAutor(this));
+        this.libros = libros;
+    }
+}
